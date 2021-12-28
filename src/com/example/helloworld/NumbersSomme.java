@@ -7,7 +7,7 @@ public class NumbersSomme {
         float result = 0;
         Scanner input = new Scanner(System.in);
         String StringValue = input.nextLine();
-        String[] Values = StringValue.split(" ");
+        String[] Values = StringValue.trim().split(",");
         for(String s:Values){
 
             try {
