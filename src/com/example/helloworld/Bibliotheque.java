@@ -1,6 +1,5 @@
 package com.example.helloworld;
 
-import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.Vector;
@@ -8,7 +7,7 @@ import java.util.Vector;
 public class Bibliotheque {
     int nbr_max;
     Vector<Livres> livres_list;
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         String[] auteurs = new String[]{"Mohamed", "Yassine"};
         Bibliotheque bibliothe = new Bibliotheque(10);
         Livres first = new Livres("Antigone", auteurs, "333", 120.40);
@@ -22,7 +21,7 @@ public class Bibliotheque {
             System.out.println("**********************");
             System.out.println("1-Voir les livres disponibles");
             System.out.println("2-Ajouter un nouveau livre");
-            System.out.println("3-Chercher un livre ");
+            System.out.println("3-Chercher un livre par son auteur ");
             System.out.print("Votre choix: ");
             Scanner choice = new Scanner(System.in);
             choiceInt = Integer.parseInt(String.valueOf(choice.nextInt()));
@@ -57,11 +56,8 @@ public class Bibliotheque {
                             System.out.println(livre);
                         }
                     }
-                    break;
                 }
-                default -> {
-                    System.out.println("Votre choix n'existe pas !! essayez encore");
-                }
+                default -> System.out.println("Votre choix n'existe pas !! essayez encore");
             }
             System.out.print("Voulez vous continuez ?! Tapez [N] si non:: ");
             choices = (new Scanner(System.in)).nextLine();
@@ -99,7 +95,7 @@ public class Bibliotheque {
         Vector<Livres> livress = new Vector<>();
         for(Livres livres : livres_list){
             for(String auteurr : livres.auteurs){
-                if(auteurr.matches(auteur)){
+                if(auteurr.toLowerCase().matches(auteurr.toLowerCase())){
                     livress.add(livres);
                 }
             }
