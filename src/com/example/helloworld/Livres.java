@@ -2,7 +2,7 @@ package com.example.helloworld;
 
 import java.util.Arrays;
 
-public class Livres {
+public class Livres implements java.io.Serializable{
     String titre;
     String[] auteurs;
     String ISBN;

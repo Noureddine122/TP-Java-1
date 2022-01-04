@@ -1,19 +1,29 @@
 package com.example.helloworld;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.Vector;
 
-public class Bibliotheque {
+public class Bibliotheque implements java.io.Serializable{
     int nbr_max;
     Vector<Livres> livres_list;
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        String file = "serial";
+        FileOutputStream fos = new FileOutputStream(file);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
         String[] auteurs = new String[]{"Mohamed", "Yassine"};
         Bibliotheque bibliothe = new Bibliotheque(10);
         Livres first = new Livres("Antigone", auteurs, "333", 120.40);
+        oos.writeObject(first);
         Livres second = new Livres("Hahaha", auteurs, "333", 120.40);
+        oos.writeObject(second);
+
         bibliothe.ajouterLivres(first);
         bibliothe.ajouterLivres(second);
+        Bibliotheque bib = new Bibliotheque(10);
+        ArrayList<Livres> list = new ArrayList<Livres>();
 
         int choiceInt;
         String choices;
@@ -41,7 +51,10 @@ public class Bibliotheque {
                     float price = (new Scanner(System.in)).nextFloat();
                     Livres newLivres = new Livres(title, tabAuteur, isbn, price);
                     bibliothe.ajouterLivres(newLivres);
+                    oos.writeObject(newLivres);
                     System.out.println("Le livre "+ title +"est bien Enregistreé!");
+                    System.out.println("Le livre "+ title +"est bien Serialisé");
+
                 }
                 case 3 -> {
                     System.out.println("Entrer le nom du auteur recherché");
@@ -63,7 +76,19 @@ public class Bibliotheque {
             choices = (new Scanner(System.in)).nextLine();
         } while (!Objects.equals(choices, "N"));
         System.out.println("Au revoir");
-
+        oos.close();
+        fos.close();
+        bibliothe.livres_list.clear();
+        try{
+            FileInputStream fis = new FileInputStream(file);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            while(fis.available() != 0) bib.ajouterLivres((Livres) ois.readObject());
+            ois.close();
+            fis.close();
+            System.out.println(bib);
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error");
+        }
 
     }
     public Bibliotheque(int nbr_max) {

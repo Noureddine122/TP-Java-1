@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class NumbersSomme {
     public static void main(String[] args){
         float result = 0;
+        System.out.print("Entrer les nombres avec {,} entre eux : ");
         Scanner input = new Scanner(System.in);
         String StringValue = input.nextLine();
         String[] Values = StringValue.trim().split(",");
